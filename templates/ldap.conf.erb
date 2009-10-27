@@ -1,0 +1,23 @@
+#
+# LDAP Defaults
+#
+
+# See ldap.conf(5) for details
+# This file should be world readable but not world writable.
+
+URI <%= ldap_uri %>
+BASE <%= ldap_base %>
+LDAP_VERSION 3
+
+#SIZELIMIT      12
+#TIMELIMIT      15
+#DEREF          never
+<% if has_variable?("ldap_ssl") -%>
+ssl start_tls
+ssl on
+TLS_CACERTFILE /etc/ssl/certs/ldap.pem
+<% else -%>
+#ssl start_tls
+#ssl on
+#TLS_CACERTFILE /etc/ssl/certs/ldap.pem
+<% end -%>
