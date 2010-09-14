@@ -21,14 +21,16 @@ class openldap::server {
   } else {
     $line = 'SLAPD_SERVICES="ldap:/// ldaps:/// ldapi:///"'
   }
-  line {"listen_locally":
+
+# TODO:  Fix this...
+#  line {"listen_locally":
 #    line    => 'SLAPD_SERVICES="ldap:/// ldaps:/// ldapi:///"',
-    line    => $line,
-    file    => "/etc/default/slapd",
-    ensure  => present,
-    require => Package[slapd],
-    notify  => Service[slapd],
-  }
+#    line    => $line,
+#    file    => "/etc/default/slapd",
+#    ensure  => present,
+#    require => Package[slapd],
+#    notify  => Service[slapd],
+#  }
 
   file {
     "/var/cache/debconf/slapd.preseed":
@@ -41,7 +43,7 @@ class openldap::server {
       owner   => root,
       group   => root,
       mode    => 755,
-      source  => "puppet:///openldap/usr/local/sbin/ldap-backup.sh";
+      source  => "puppet:///modules/openldap/usr/local/sbin/ldap-backup.sh";
     "/var/backups/ldap":
       ensure  => directory,
       owner   => root,
@@ -61,7 +63,7 @@ class openldap::server {
       mode   => 644,
       owner  => root,
       group  => root,
-      source  => "puppet:///openldap/etc/ldap/schema/authldap.schema",
+      source  => "puppet:///modules/openldap/etc/ldap/schema/authldap.schema",
       require => File["/etc/ldap/schema"];
   }
 
