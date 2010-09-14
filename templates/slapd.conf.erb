@@ -8,9 +8,6 @@ include         /etc/ldap/schema/core.schema
 include         /etc/ldap/schema/cosine.schema
 include         /etc/ldap/schema/nis.schema
 include         /etc/ldap/schema/inetorgperson.schema
-<% if has_variable?("ldap_smb") -%>
-include         /etc/ldap/schema/samba.schema
-<% end -%>
 include         /etc/ldap/schema/authldap.schema
 
 # Schema check allows for forcing entries to
@@ -52,11 +49,6 @@ directory       "/var/lib/ldap"
 # Indexing options for database #1
 index         uid,uidNumber,gidNumber,memberUid       eq
 index         cn,mail,surname,givenname               eq,subinitial
-<% if has_variable?("ldap_smb") -%>
-index         sambaSID                                eq
-index         sambaPrimaryGroupSID                    eq
-index         sambaDomainName                         eq
-<% end -%>
 # Save the time that the entry gets modified, for database #1
 lastmod         on
 
